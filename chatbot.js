@@ -2,30 +2,19 @@
 
 document.addEventListener("DOMContentLoaded", () => {
   const chatLog = document.getElementById("chat-log");
-  const chatuser = document.getElementById("chat-user");
-  const chatbot = document.getElementById("chat-bot");
   const chatInput = document.getElementById("chat-input");
   const sendButton = document.getElementById("send-button");
 
   // Function to add a message to the chat log
   function addMessage(message, sender, isHTML = false) {
     const messageElement = document.createElement("div");
-    const You = document.createElement("div");
-    const Bot = document.createElement("div");
-
     messageElement.className = `message ${sender}-message`;
     if (isHTML) {
-      messageElement.innerHTML = "Bot" + message;
-      Bot.innerHTML = "Bot";
+      messageElement.innerHTML =  message;
     } else {
-      You.textContent = "You";
       messageElement.textContent = message;
     }
-
     chatLog.appendChild(messageElement);
-    chatuser.appendChild(You);
-    chatbot.append(Bot);
-
     chatLog.scrollTop = chatLog.scrollHeight;
   }
 
