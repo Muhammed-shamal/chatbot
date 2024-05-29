@@ -5,12 +5,14 @@ document.addEventListener("DOMContentLoaded", () => {
   const chatInput = document.getElementById("chat-input");
   const sendButton = document.getElementById("send-button");
 
+  sendButton.disabled = true;
+
   // Function to add a message to the chat log
   function addMessage(message, sender, isHTML = false) {
     const messageElement = document.createElement("div");
     messageElement.className = `message ${sender}-message`;
     if (isHTML) {
-      messageElement.innerHTML =  message;
+      messageElement.innerHTML = message;
     } else {
       messageElement.textContent = message;
     }
@@ -62,25 +64,48 @@ document.addEventListener("DOMContentLoaded", () => {
   // Function to generate bot response
   function getBotResponse(userMessage) {
     const services = ["Service A", "Service B", "Service C", "Service D"];
-
     const responses = {
-      hello: "Hi there! How can I help you today? 😊",
-      hel: "Certainly! How can I assist you today? 😊",
-      hi: "Hello! How can I assist you today? 😊",
-      hai: "Hello! What can I do for you? 😊",
+      greeting: {
+        hello: "Hi there! How can I help you today? 😊",
+        helo: "Certainly! How can I assist you today? 😊",
+        hi: "Hello! How can I assist you today? 😊",
+        hai: "Hello! What can I do for you? 😊",
+      },
       help:
-        `Sure, I'm here to help. What do you need assistance with? Here are my services:<br>` +
+        "Sure, I'm here to help. What do you need assistance with? Here are my services:<br>" +
         services
           .map(
             (service) => `<button class="service-button">${service}</button>`
           )
           .join(" "),
+      contact: "Can you call this number 8304912033?",
+      education:
+        "I can provide information about various educational topics. What specific information do you need?",
+      language:
+        "I can assist you with language-related queries. What do you want to know?",
+      // Add more categories and responses as needed
       default: "I'm not sure how to respond to that. Can you please rephrase?",
-      services: "Can you call this number 8304912033?",
     };
 
     userMessage = userMessage.toLowerCase();
-    return responses[userMessage] || responses.default;
+
+    // Check for specific categories
+    if (userMessage.includes("contact")) {
+      return responses.contact;
+    } else if (userMessage.includes("education")) {
+      return responses.education;
+    } else if (userMessage.includes("language")) {
+      return responses.language;
+    }
+
+    // Check for greetings
+    for (const key in responses.greeting) {
+      if (userMessage.includes(key)) {
+        return responses.greeting[key];
+      }
+    }
+
+    return responses.default;
   }
 
   // Function to handle service button clicks
@@ -103,6 +128,15 @@ document.addEventListener("DOMContentLoaded", () => {
   chatInput.addEventListener("keypress", (event) => {
     if (event.key === "Enter") {
       handleUserInput();
+    }
+  });
+
+  // Disable the button when input is empty
+  chatInput.addEventListener("input", () => {
+    if (chatInput.value.trim() === "") {
+      sendButton.disabled = true;
+    } else {
+      sendButton.disabled = false;
     }
   });
 });
