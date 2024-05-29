@@ -11,11 +11,23 @@ document.addEventListener("DOMContentLoaded", () => {
   function addMessage(message, sender, isHTML = false) {
     const messageElement = document.createElement("div");
     messageElement.className = `message ${sender}-message`;
+
+    // Create a span element for timestamp
+    const timestampSpan = document.createElement("span");
+    timestampSpan.className = "message-timestamp";
+    const timestamp = new Date().toLocaleTimeString(); // Get current time
+
+    // Set the timestamp text
+    timestampSpan.textContent = timestamp;
+    messageElement.appendChild(timestampSpan); // Append timestamp to message
+
+    // Append message content
     if (isHTML) {
-      messageElement.innerHTML = message;
+      messageElement.innerHTML += ": " + message;
     } else {
-      messageElement.textContent = message;
+      messageElement.textContent += ": " + message;
     }
+
     chatLog.appendChild(messageElement);
     chatLog.scrollTop = chatLog.scrollHeight;
   }
