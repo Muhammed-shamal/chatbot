@@ -80,7 +80,16 @@ document.addEventListener("DOMContentLoaded", () => {
       greeting: {
         hello: "Hi there! How can I help you today? 😊",
         helo: "Certainly! How can I assist you today? 😊",
-        hi: "Hello! How can I assist you today? 😊",
+        hi: `Hi 😊,
+
+         Here are some commands you can use :
+
+         education:
+        services:
+         contact details:
+         
+         How can I assist you today?`,
+
         hai: "Hello! What can I do for you? 😊",
       },
       help:
